@@ -1,0 +1,45 @@
+<!doctype>
+<html>
+    <head>
+        <script src="https://cdn.bootcss.com/vue/2.5.2/vue.min.js"></script>
+        <script src="https://cdn.bootcss.com/vuex/3.0.1/vuex.min.js"></script>
+    </head>
+    <body>
+        <div class="app">
+            {{ person.name }}
+            {{ person.age }}
+        </div>
+    </body>
+    <script>
+        const store = new Vuex.Store({
+            state : {
+                person : {
+                    name : 'peter'
+                }
+            },
+            mutations : {
+                setName (state,name) {
+                    state.person.name = name;
+                },
+                setAge (state,age) {
+                    state.person.age = age;
+                }
+            },
+            getters : {
+                getName : state => {
+                    return this.state.name;
+                },
+                getAge : state => {
+                    return this.state.age;
+                }
+            },
+            actions : {
+                setName({commit},name) {
+                    setTimeout(() => {
+                        commit('setName',name);
+                    },1000);
+                }
+            }
+        })
+    </script>
+</html>
