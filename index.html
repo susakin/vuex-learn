@@ -6,15 +6,18 @@
     </head>
     <body>
         <div class="app">
-            {{ person.name }}
-            {{ person.age }}
+            {{ age }}
+            {{ name }}
+            <button @click="changeName">改变名字</button>
+            <button @click="changeAge">改变年龄</button>
         </div>
     </body>
     <script>
         const store = new Vuex.Store({
             state : {
                 person : {
-                    name : 'peter'
+                    name : 'peter',
+                    age : 12
                 }
             },
             mutations : {
@@ -27,10 +30,10 @@
             },
             getters : {
                 getName : state => {
-                    return this.state.name;
+                    return state.person.name;
                 },
                 getAge : state => {
-                    return this.state.age;
+                    return state.person.age;
                 }
             },
             actions : {
@@ -38,6 +41,30 @@
                     setTimeout(() => {
                         commit('setName',name);
                     },1000);
+                },
+                setAge({commit},age) {
+                    setTimeout(() => {
+                        commit('setAge',age);
+                    },1000);
+                }
+            }
+        });
+        new Vue({
+            el : '.app',
+            computed : {
+                age () {
+                    return store.getters.getAge;
+                },
+                name() {
+                    return store.getters.getName;
+                }
+            },
+            methods : {
+                changeName () {
+                    store.commit('setName','张三');
+                },
+                changeAge() {
+                    store.dispatch('setAge',20);
                 }
             }
         })
